@@ -8,8 +8,8 @@ import SearchManufacturer from "./SearchManufacturer";
 const SearchButton = ({ otherClasses }: { otherClasses: string }) => (
   <button type="submit" className={`-ml-3 z-10 ${otherClasses}`}>
     <Image
-      src="/magnifying-glass.svg"
-      alt="Magnifying glass"
+      src={"/magnifying-glass.svg"}
+      alt={"magnifying glass"}
       width={40}
       height={40}
       className="object-contain"
@@ -18,8 +18,9 @@ const SearchButton = ({ otherClasses }: { otherClasses: string }) => (
 );
 
 const SearchBar = () => {
-  const [manufacturer, setManufacturer] = useState("");
+  const [manufacturer, setManuFacturer] = useState("");
   const [model, setModel] = useState("");
+
   const router = useRouter();
 
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
@@ -57,7 +58,7 @@ const SearchBar = () => {
       <div className="searchbar__item">
         <SearchManufacturer
           manufacturer={manufacturer}
-          setManufacturer={setManufacturer}
+          setManufacturer={setManuFacturer}
         />
         <SearchButton otherClasses="sm:hidden" />
       </div>

@@ -4,25 +4,31 @@ import axios from "axios";
 export async function fetchCars(filters: FilterProps) {
   const { manufacturer, year, model, limit, fuel } = filters;
 
-  const options = {
-    method: "GET",
-    url: "https://cars-by-api-ninjas.p.rapidapi.com/v1/cars",
-    params: {
-      manufacturer: manufacturer,
-      year: year,
-      model: model,
-      limit: limit,
-      fuel: fuel,
-    },
-    headers: {
-      "X-RapidAPI-Key": "808d19baadmshb3805c7285a2c06p1a70d2jsnd30d1f56d191",
-      "X-RapidAPI-Host": "cars-by-api-ninjas.p.rapidapi.com",
-    },
+  const headers = {
+    "X-RapidAPI-Key": "808d19baadmshb3805c7285a2c06p1a70d2jsnd30d1f56d191",
+    "X-RapidAPI-Host": "cars-by-api-ninjas.p.rapidapi.com",
   };
 
-  const response = await axios.request(options);
+  try {
+    const response = await axios.get(
+      `https://cars-by-api-ninjas.p.rapidapi.com/v1/cars`,
+      {
+        params: {
+          make: manufacturer,
+          year: year,
+          model: model,
+          limit: limit,
+          fuel_type: fuel,
+        },
+        headers: headers,
+      },
+    );
 
-  return response.data;
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching cars:", error);
+    throw error;
+  }
 }
 
 export const calculateCarRent = (city_mpg: number, year: number) => {

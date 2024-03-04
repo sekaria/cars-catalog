@@ -1,6 +1,6 @@
 "use client";
 import { manufacturers } from "@/constants";
-import { searchManufacturerProps } from "@/types";
+import { SearchManufacturerProps } from "@/types";
 import { Combobox, Transition } from "@headlessui/react";
 import Image from "next/image";
 import { Fragment, useState } from "react";
@@ -8,7 +8,7 @@ import { Fragment, useState } from "react";
 const SearchManufacturer = ({
   manufacturer,
   setManufacturer,
-}: searchManufacturerProps) => {
+}: SearchManufacturerProps) => {
   const [query, setQuery] = useState("");
 
   const filteredManufacturers =
@@ -31,14 +31,15 @@ const SearchManufacturer = ({
               width={20}
               height={20}
               className="ml-4"
-              alt="Car Logo"
+              alt="car logo"
             />
           </Combobox.Button>
+
           <Combobox.Input
             className="search-manufacturer__input"
-            placeholder="Volkswagen"
-            displayValue={(manufacturer: string) => manufacturer}
-            onChange={(e) => setQuery(e.target.value)}
+            displayValue={(item: string) => item}
+            onChange={(event) => setQuery(event.target.value)}
+            placeholder="Volkswagen..."
           />
 
           <Transition
@@ -48,30 +49,29 @@ const SearchManufacturer = ({
             leaveTo="opacity-0"
             afterLeave={() => setQuery("")}
           >
-            <Combobox.Options>
+            <Combobox.Options
+              className="absolute mt-1 max-h-60 w-full overflow-auto rounded-md bg-white py-1 text-base shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none sm:text-sm z-50"
+              static
+            >
               {filteredManufacturers.length === 0 && query !== "" ? (
                 <Combobox.Option
                   value={query}
                   className="search-manufacturer__option"
                 >
-                  There is no "{query}"
+                  Create "{query}"
                 </Combobox.Option>
               ) : (
                 filteredManufacturers.map((item) => (
                   <Combobox.Option
                     key={item}
                     className={({ active }) =>
-                      `relative search-manufacturer__option ${active ? "bg-primary-blue text-white" : "text-gray-900"}`
+                      `relative search-manufacturer__option ${
+                        active ? "bg-primary-blue text-white" : "text-gray-900"
+                      }`
                     }
                     value={item}
                   >
-                    {({
-                      selected,
-                      active,
-                    }: {
-                      selected: boolean;
-                      active: boolean;
-                    }) => (
+                    {({ selected, active }) => (
                       <>
                         <span
                           className={`block truncate ${selected ? "font-medium" : "font-normal"}`}
